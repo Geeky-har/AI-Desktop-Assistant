@@ -2,6 +2,7 @@ import pyttsx3
 from weather import *
 from sound import play
 from jokes import *
+from otd import otd
 import requests
 import os
 import random
@@ -81,6 +82,7 @@ if __name__ == "__main__":
     weather_list = ['weather', 'temperature']
     pics_list = ['show photos', 'show pictures']
     joke_list = ['cheer', 'joke', 'laugh']
+    otd_list = ['on this day', 'today fact', 'fact']
 
     while flag:
         query = command().lower()
@@ -163,6 +165,12 @@ if __name__ == "__main__":
 
             print('A.' + p)
             bhokon(p)
+
+        elif any(i in query for i in otd_list):
+            fact = otd()
+            
+            print(fact)
+            bhokon(fact)
 
         elif 'none' in query:
             bhokon("Failed to recognize, try again")
