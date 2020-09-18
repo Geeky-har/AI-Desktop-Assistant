@@ -78,6 +78,7 @@ if __name__ == "__main__":
     flag = True
     bye_list = ['bye', 'goodbye']
     wiki_list = ['who is', 'what is']
+    git_list = ['github', 'open github']
     music_list = ['play music', 'play songs']
     weather_list = ['weather', 'temperature']
     pics_list = ['show photos', 'show pictures']
@@ -110,6 +111,12 @@ if __name__ == "__main__":
             print("Redirecting to google")
             bhokon("Redirecting to google")
             webbrowser.get(chrome_path).open("google.com")
+
+        elif any(i in query for i in git_list):
+            m = 'Redirecting to your github'
+            print(m)
+            bhokon(m)
+            webbrowser.get(chrome_path).open('github.com/Geeky-har')
 
         elif 'search' in query:
             base_url = "http://www.google.com/?#q="
