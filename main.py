@@ -3,6 +3,7 @@ from weather import *
 from sound import play
 from jokes import *
 from otd import otd
+from emailInfo import *
 import requests
 import os
 import random
@@ -72,6 +73,15 @@ def command():     # takes command and converts it to the query
 
     return query
 
+def sendMail(recipient, content):
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.ehlo()
+    server.starttls()
+    emailId = emailEx()
+    password = passEx()
+    server.login(emailId, password)
+    server.sendmail(emailId, recipient, content)
+    server.close()
 
 if __name__ == "__main__":
     greet()
@@ -84,6 +94,7 @@ if __name__ == "__main__":
     pics_list = ['show photos', 'show pictures']
     joke_list = ['cheer', 'joke', 'laugh']
     otd_list = ['on this day', 'today fact', 'fact']
+    email_list = ['send email', 'email', 'mail']
 
     while flag:
         query = command().lower()
@@ -178,6 +189,21 @@ if __name__ == "__main__":
             
             print(fact)
             bhokon(fact)
+
+        elif any(i in query for i in email_list):
+            try:
+                print('What you want to send.. Please speak')
+                bhokon('What you want to send.. Please speak')
+                content = command()
+                recipient = 'harshnegi6477@gmail.com'
+                sendMail(recipient, content)
+                success_msg = "Your email has been sent successfully!"
+                print(success_msg)
+                bhokon(success_msg)
+
+            except Exception as e:
+                print(f"Some problem has occured {e}")
+                bhokon("Some problem has occured. Try later!")
 
         elif 'none' in query:
             bhokon("Failed to recognize, try again")
