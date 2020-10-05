@@ -1,9 +1,10 @@
 import pyttsx3
 from weather import *
 from sound import play
-from jokes import *
-from otd import otd
 from emailInfo import *
+from jokes import *
+from battery import *
+from otd import otd
 import requests
 import os
 import random
@@ -19,11 +20,13 @@ chrome_path = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s' #
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[0].id)
-engine.setProperty('rate', 200)     #sets the rate of speech
+engine.setProperty('rate', 200)     # sets the rate of speech
+
 
 def bhokon(text):       # function of speakingg
     engine.say(text)
     engine.runAndWait()
+
 
 def greet():            # initial greet by the assistant
 
@@ -50,6 +53,7 @@ def greet():            # initial greet by the assistant
     print(line)
     bhokon(line)
 
+
 def command():     # takes command and converts it to the query
     '''
     Takes command from the microphone and returns a string
@@ -73,6 +77,7 @@ def command():     # takes command and converts it to the query
 
     return query
 
+
 def sendMail(recipient, content):
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.ehlo()
@@ -82,6 +87,7 @@ def sendMail(recipient, content):
     server.login(emailId, password)
     server.sendmail(emailId, recipient, content)
     server.close()
+
 
 if __name__ == "__main__":
     greet()
@@ -95,6 +101,7 @@ if __name__ == "__main__":
     joke_list = ['cheer', 'joke', 'laugh']
     otd_list = ['on this day', 'today fact', 'fact']
     email_list = ['send email', 'email', 'mail']
+    battery_list = ['check battery', 'power status', 'battery']
 
     while flag:
         query = command().lower()
@@ -160,6 +167,11 @@ if __name__ == "__main__":
             print("Goodbye have a nice day!")
             bhokon("Goodbye, have a nice day!")
             flag = False
+
+        elif any(i in query for i in battery_list):
+            show = f'Your Battery is {charge()}% {charge_status()}'
+            print(show)
+            bhokon(show)
 
         elif any(i in query for i in weather_list):
             t = temp()
