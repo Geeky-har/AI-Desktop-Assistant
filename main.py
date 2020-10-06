@@ -5,6 +5,7 @@ from emailInfo import *
 from jokes import *
 from battery import *
 from otd import otd
+from textMsg import *
 import requests
 import os
 import random
@@ -102,6 +103,7 @@ if __name__ == "__main__":
     otd_list = ['on this day', 'today fact', 'fact']
     email_list = ['send email', 'email', 'mail']
     battery_list = ['check battery', 'power status', 'battery']
+    textmsg_list = ['send a message', 'text message', 'message']
 
     while flag:
         query = command().lower()
@@ -216,6 +218,20 @@ if __name__ == "__main__":
             except Exception as e:
                 print(f"Some problem has occured {e}")
                 bhokon("Some problem has occured. Try later!")
+
+        elif any(i in query for i in textmsg_list):
+            try:
+                print("What you want to send? Please speak...")
+                bhokon("What you want to send? Please speak...")
+                body = command()
+                to = '+917836952729'
+                sendMsg(to, body)
+                print('The text message has been sent successfully!')
+                bhokon('The text message has been sent successfully!')
+
+            except Exception as e:
+                print(f'Some error occured! Cant send text message {e}')
+                bhokon(f'Some error occured! Cant send text message {e}')
 
         elif 'none' in query:
             bhokon("Failed to recognize, try again")
