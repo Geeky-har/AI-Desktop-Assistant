@@ -221,11 +221,14 @@ if __name__ == "__main__":
 
         elif any(i in query for i in textmsg_list):
             try:
-                print("What you want to send? Please speak...")
-                bhokon("What you want to send? Please speak...")
+                print("Who you want to send the message?")
+                bhokon("Who you want to send the message?")
+                to_name = command().lower()
+                to_num = getNum(to_name)
+                print(f"What you want to send to {to_name} ? Please speak...")
+                bhokon(f"What you want to send to {to_name}? Please speak...")
                 body = command()
-                to = '+917836952729'
-                sendMsg(to, body)
+                sendMsg(to_num, body)
                 print('The text message has been sent successfully!')
                 bhokon('The text message has been sent successfully!')
 
