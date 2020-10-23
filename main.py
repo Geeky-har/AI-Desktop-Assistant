@@ -1,11 +1,4 @@
 import pyttsx3
-from weather import *
-from sound import play
-from emailInfo import *
-from jokes import *
-from battery import *
-from otd import otd
-from textMsg import *
 import requests
 import os
 import random
@@ -14,6 +7,14 @@ import speech_recognition as sr
 import wikipedia
 import webbrowser
 import smtplib
+from weather import *
+from sound import play
+from emailInfo import *
+from jokes import *
+from battery import *
+from otd import otd
+from textMsg import *
+from dictionary import *
 
 url = 'http://docs.python.org/' # for registering webbrowser
 chrome_path = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s' # chrome path in dir
@@ -104,6 +105,7 @@ if __name__ == "__main__":
     email_list = ['send email', 'email', 'mail']
     battery_list = ['check battery', 'power status', 'battery']
     textmsg_list = ['send a message', 'text message', 'message']
+    dict_list = ['open dictionary', 'dictionary']
 
     while flag:
         query = command().lower()
@@ -137,6 +139,30 @@ if __name__ == "__main__":
             print(m)
             bhokon(m)
             webbrowser.get(chrome_path).open('github.com/Geeky-har')
+
+        elif any(i in query for i in dict_list):
+            print('Welcome to Dictionary')
+            bhokon('Welcome to Dictionary')
+
+            print('Which word you want to search?')
+            bhokon('Which word you want to search?')
+
+            word = command()
+
+            getWord(word)
+
+            word_meaning = f'The meaning of {word} is: {meaning(word)}'
+            word_example = f'For example: {example(word)}'
+            word_synonymn = f'Some similar words are: {similarWords(word)}'
+
+            print(word_meaning)
+            bhokon(word_meaning)
+
+            print(word_example)
+            bhokon(word_example)
+
+            print(word_synonymn)
+            bhokon(word_synonymn)
 
         elif 'search' in query:
             base_url = "http://www.google.com/?#q="
