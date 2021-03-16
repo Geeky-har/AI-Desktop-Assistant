@@ -16,6 +16,7 @@ from otd import otd
 from textMsg import *
 from dictionary import *
 from open_camera import open_cam
+from news_head import news_read
 
 url = 'http://docs.python.org/' # for registering webbrowser
 chrome_path = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s'  # chrome path in dir
@@ -108,6 +109,7 @@ if __name__ == "__main__":
     textmsg_list = ['send a message', 'text message', 'message']
     dict_list = ['open dictionary', 'dictionary']
     cam_list = ['open camera', 'open webcam']
+    news_list = ['headlines', 'news']
 
     while flag:
         query = command().lower()
@@ -202,6 +204,9 @@ if __name__ == "__main__":
             show = f'Your Battery is {charge()}% {charge_status()}'
             print(show)
             bhokon(show)
+
+        elif any(i in query for i in news_list):
+            news_read()
 
         elif any(i in query for i in cam_list):
             print("opening webcam")
