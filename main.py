@@ -15,9 +15,10 @@ from battery import *
 from otd import otd
 from textMsg import *
 from dictionary import *
+from open_camera import open_cam
 
 url = 'http://docs.python.org/' # for registering webbrowser
-chrome_path = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s' # chrome path in dir
+chrome_path = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s'  # chrome path in dir
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
@@ -37,12 +38,12 @@ def greet():            # initial greet by the assistant
     line = "I am Your Virtual assistant, How may I help you!"
     hour = int(datetime.datetime.now().hour)
 
-    if hour >= 0 and hour < 12:
+    if 0 <= hour < 12:
         wish = "Good Morning"
         print(wish)
         bhokon(wish)
 
-    elif hour >= 12 and hour < 1:
+    elif 12 <= hour < 1:
         wish = "Good Afternoon"
         print(wish)
         bhokon(wish)
@@ -57,9 +58,9 @@ def greet():            # initial greet by the assistant
 
 
 def command():     # takes command and converts it to the query
-    '''
+    """
     Takes command from the microphone and returns a string
-    '''
+    """
 
     r = sr.Recognizer()
     with sr.Microphone() as source:
@@ -106,6 +107,7 @@ if __name__ == "__main__":
     battery_list = ['check battery', 'power status', 'battery']
     textmsg_list = ['send a message', 'text message', 'message']
     dict_list = ['open dictionary', 'dictionary']
+    cam_list = ['open camera', 'open webcam']
 
     while flag:
         query = command().lower()
@@ -201,6 +203,11 @@ if __name__ == "__main__":
             print(show)
             bhokon(show)
 
+        elif any(i in query for i in cam_list):
+            print("opening webcam")
+            bhokon("opening webcam")
+            open_cam()
+
         elif any(i in query for i in weather_list):
             t = temp()
             h = humid()
@@ -250,10 +257,10 @@ if __name__ == "__main__":
                 print("Who you want to send the message?")
                 bhokon("Who you want to send the message?")
                 to_name = command().lower()
-                to_num = getNum(to_name)
                 print(f"What you want to send to {to_name} ? Please speak...")
                 bhokon(f"What you want to send to {to_name}? Please speak...")
                 body = command()
+                to_num = getNum(to_name)
                 sendMsg(to_num, body)
                 print('The text message has been sent successfully!')
                 bhokon('The text message has been sent successfully!')
